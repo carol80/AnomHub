@@ -2,17 +2,19 @@ import { useEffect, useState } from "react";
 
 import Display from "./Display"
 import Digits from "./Digits"
-import ChatSpace from "../chatApp/ChatSpace";
 
-const SECRET_KEY = "8085"
 
-const Calculator = () => {
+interface props {
+    setAnomActive: (anomActive: boolean) => void
+}
+
+
+const Calculator = ({ setAnomActive }: props) => {
     let [calcValue, setCalcValue] = useState("");
     let [displayEquation, setDisplayEquation] = useState(" ");
     let [brackets, setBrackets] = useState(true);
 
     useEffect(() => {
-        console.log(calcValue, brackets);
         if (calcValue === "()") {
             if (brackets) {
                 setBrackets(false)
@@ -22,6 +24,9 @@ const Calculator = () => {
             setBrackets(true)
             setDisplayEquation(displayEquation + ")")
         } else if (calcValue === "=") {
+            if (displayEquation.trim() === import.meta.env.VITE_ANOM_SECRET_KEY) {
+                setAnomActive(true);
+            }
             if (displayEquation[displayEquation.length - 1] !== ")" && Number.isNaN(parseInt(displayEquation[displayEquation.length - 1]))) {
                 alert("Invalid Equation!!");
                 return;
@@ -34,21 +39,15 @@ const Calculator = () => {
         } else {
             setDisplayEquation(displayEquation + calcValue);
         }
+        setCalcValue("");
 
     }, [calcValue]);
 
     return (
         <>
-            <div style={{ backgroundColor: '#000', minHeight: '100vh', backgroundImage: 'linear-gradient(to top, #000, #333)' }}>
-                <h1 className="text-center bg-black bg-gradient text-white p-4">AN0M<span className="badge text-bg-warning">Hub</span></h1>
-
-                {SECRET_KEY == displayEquation ? <ChatSpace /> : (
-                    <div className="position-absolute top-50 start-50 translate-middle d-grid" style={{ width: "30%" }}>
-                        <Display displayEquation={displayEquation} />
-                        <Digits setCalcValue={setCalcValue} />
-                    </div>
-                )
-                }
+            <div className="position-absolute top-50 start-50 translate-middle d-grid" style={{ width: "100%", height: "70%" }}>
+                <Display displayEquation={displayEquation} />
+                <Digits setCalcValue={setCalcValue} />
             </div>
         </>
     )

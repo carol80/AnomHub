@@ -6,7 +6,7 @@ interface props{
 const Digits = ({ setCalcValue }: props) => {
 
     return (
-        <div className="inline bg-dark-subtle d-grid" style={{ maxWidth: "30rem" }}>
+        <div className="inline bg-dark-subtle d-grid" style={{ width: "100%", height: "100%" }}>
             <div className="btn-group col-12 col-sm-12" role="group" aria-label="Basic outlined example">
                 <button type="button" className="btn btn-outline-secondary" style={{ width: "30px" }} onClick={() => setCalcValue("C")}>C</button>
                 <button type="button" className="btn btn-outline-secondary" style={{ width: "30px" }} onClick={() => setCalcValue("()")}>()</button>
