@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Loader from "../Loader";
 import { Link } from "react-router";
+import Channels from "./Channels";
 
 const ChatSpace = () => {
     let [showLoader, setShowLoader] = useState(true);
@@ -14,14 +15,13 @@ const ChatSpace = () => {
     }, []);
     return (
         <>
-            <Link to="/AnomHub/">
-                <button className="btn btn-outline-secondary text-white m-1">Close App </button>
-            </Link>
+            <div className="d-flex justify-content-end">
+                <Link to="/AnomHub/">
+                    <button className="btn btn-outline-danger justify-content-sm-end text-danger m-3" style={{ borderRadius: "50rem" }}>X</button>
+                </Link>
+            </div>
 
-
-            { showLoader ? <Loader /> :
-                <h1 className="text-warning text-center">Welcome to ChatSpace!!!!!!!</h1>
-            }
+            {showLoader ? <Loader /> : <Channels /> }
         </>
 
     )
